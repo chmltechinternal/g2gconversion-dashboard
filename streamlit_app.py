@@ -2,11 +2,27 @@ import streamlit as st
 import pandas as pd
 import math
 from pathlib import Path
+import numpy as np
+from scipy.special import expit
+
+# Define your custom CSS
+custom_css = """
+<style>
+.prediction-box {
+ background-color: #f0f2f6;
+ padding: 10px;
+ border-radius: 5px;
+ text-align: center;
+
+}
+</style>
+"""
+
 
 # Set the title and favicon that appear in the Browser's tab bar.
 st.set_page_config(
-    page_title='GDP dashboard',
-    page_icon=':earth_americas:', # This is an emoji shortcode. Could be a URL too.
+    page_title='Glycerin-to-Glycol Conversion dashboard',
+    #page_icon=':earth_americas:', # This is an emoji shortcode. Could be a URL too.
 )
 
 # -----------------------------------------------------------------------------
@@ -62,14 +78,90 @@ gdp_df = get_gdp_data()
 # -----------------------------------------------------------------------------
 # Draw the actual page
 
-# Set the title that appears at the top of the page.
-'''
-# :earth_americas: GDP dashboard
+# Set the title that appears at the top of the page. Commented out code below shows with an icon
+# :earth_americas: Glycerin-to-Glycol Conversion dashboard
 
-Browse GDP data from the [World Bank Open Data](https://data.worldbank.org/) website. As you'll
-notice, the data only goes to 2022 right now, and datapoints for certain years are often missing.
-But it's otherwise a great (and did I mention _free_?) source of data.
+#title only
 '''
+# Glycerin-to-Glycol Conversion dashboard
+
+Advanced model with normalized parameter impacts.
+'''
+#set the tab containers
+tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
+
+with tempControl:
+    min_value = 180
+    max_value = 200
+    range_T2 = st.slider(
+    'T2 (°C) - Critical:',
+    min_value=0,
+    max_value=200,
+    value=[min_value, max_value])
+    
+    range_T3 = st.slider(
+    'T3 (°C):',
+    min_value=0,
+    max_value=200,
+    value=[min_value, max_value])
+    
+    range_T4 = st.slider(
+    'T4 (°C):',
+    min_value=0,
+    max_value=201,
+    value=[min_value, max_value])
+    
+    range_T1 = st.slider(
+    'T1 (°C):',
+    min_value=0,
+    max_value=195,
+    value=[min_value, max_value])
+    
+    range_T5 = st.slider(
+    'T5 (°C):',
+    min_value=0,
+    max_value=195,
+    value=[min_value, max_value])
+
+
+with procParam:
+    range_LHSV = st.slider(
+    'LHSV (1/h):',
+    value=[0.00, 0.60])
+    
+    range_H2_GLY = st.slider(
+    'H2:GLY Ratio:',
+    value=[0.00, 6.50])
+    
+    range_LF = st.slider(
+    'Liquid Feed (g/h):',
+    value=[0.00, 100.00])
+    
+    range_HF = st.slider(
+    'Hydrogen Flow (mL/min):',
+    value=[0.00, 450.00])
+
+with pressurePH:
+    range_TP = st.slider(
+    'Top Pressure (bar):',
+    value=[0.00, 30.00])
+    
+    range_BP = st.slider(
+    'Bottom Pressure (bar):',
+    value=[0.00, 25.00])
+    
+    range_FpH = st.slider(
+    'Feed pH:',
+    value=[0.00, 7.00])
+    
+# Apply the custom CSS
+st.markdown(custom_css, unsafe_allow_html=True)
+
+# Use the custom class in a container
+st.markdown('<div class="prediction-box"><h2 style="margin: 0; color: #2c3e50;">Predicted Glycerol Conversion</h2><p style="font-size: 2.5em; margin: 10px 0; color: #2980b9;">{conversion:.1f}%</p></div>', unsafe_allow_html=True)
+
+
+
 
 # Add some spacing
 ''
