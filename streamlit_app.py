@@ -3,7 +3,7 @@ import pandas as pd
 import math
 from pathlib import Path
 import numpy as np
-from scipy.special import expit
+#from scipy.special import expit
 
 # Define your custom CSS
 custom_css = """
