@@ -5,7 +5,10 @@ from pathlib import Path
 import numpy as np
 from scipy.special import expit
 import matplotlib.pyplot as plt
-
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
 
 # Define optimal ranges with sensitivity and base impacts
 OPTIMAL_RANGES = {
@@ -473,6 +476,10 @@ ax.set_xlabel('T2 (°C)')
 ax.set_ylabel('Glycerol Conversion (wt.%)')
 
 st.write(fig)
+
+
+
+
 
 
 #comment this out for now (example of GDP graph and slider)
