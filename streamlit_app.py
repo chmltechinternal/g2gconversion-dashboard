@@ -429,7 +429,11 @@ st.markdown("""
             color: red;
             font-size: 18px;
         }
-        .info-text {
+        .info-text2 {
+            font-size: 12px;
+            line-height:14px;
+        }
+            .info-text {
             font-size: 14px;
             line-height:14px;
         }
@@ -449,12 +453,12 @@ with col_prediction:
 
     # Operating Guidelines
     st.markdown("""<p class="subsubheading">Operating Guidelines</p>""", unsafe_allow_html=True)
-    st.markdown("""<ul class="info-text">
-<li> Maintain T2-T4 within 195-205°C for optimal conversion</li>
-<li> Keep pressure differential balanced for system stability</li>
-<li> Monitor pH within optimal range of 6-8</li>
-<li> Maintain proper H2:GLY ratio for reaction efficiency</li>
-</ul>""", unsafe_allow_html=True)
+    st.markdown("""<p class="info-text2">
+- Maintain T2-T4 within 195-205°C for optimal conversion<br/>
+- Keep pressure differential balanced for system stability<br/>
+- Monitor pH within optimal range of 6-8<br/>
+- Maintain proper H2:GLY ratio for reaction efficiency
+</p>""", unsafe_allow_html=True)
 
  # Display parameter impacts
 st.markdown("""<p class="subheading">Parameter Contributions</p>""", unsafe_allow_html=True)
