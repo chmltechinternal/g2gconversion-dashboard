@@ -206,7 +206,7 @@ def get_lrc_data():
     """
 
     # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
-    DATA_FILENAME2 = Path(__file__).parent/'data/LRC_G1_Data_clean.csv'
+    DATA_FILENAME2 = Path(__file__).parent/'data/LRCG1Dataclean.csv'
     lrcg1_df = pd.read_csv(DATA_FILENAME2)
 
     # The data above has columns like:
@@ -221,15 +221,15 @@ def get_lrc_data():
     #
 
     # Convert temp from string to float
-    lrcg1_df['T1_(°C)'] = pd.to_numeric(lrcg1_df['T1_(°C)'])
-    lrcg1_df['T2_(°C)'] = pd.to_numeric(lrcg1_df['T2_(°C)'])
-    lrcg1_df['T3_(°C)'] = pd.to_numeric(lrcg1_df['T3_(°C)'])
-    lrcg1_df['T4_(°C)'] = pd.to_numeric(lrcg1_df['T4_(°C)'])
-    lrcg1_df['T5_(°C)'] = pd.to_numeric(lrcg1_df['T5_(°C)'])
+    lrcg1_df['T1C'] = pd.to_numeric(lrcg1_df['T1C'])
+    lrcg1_df['T2C'] = pd.to_numeric(lrcg1_df['T2C'])
+    lrcg1_df['T3C'] = pd.to_numeric(lrcg1_df['T3C'])
+    lrcg1_df['T4C'] = pd.to_numeric(lrcg1_df['T4C'])
+    lrcg1_df['T5C'] = pd.to_numeric(lrcg1_df['T5C'])
 
     # Convert top pressure from integer to float
-    lrcg1_df['Top_Reactor_Pressure_(psi)'] = pd.to_numeric(lrcg1_df['Top_Reactor_Pressure_(psi)']+0.0)
-    lrcg1_df['Bottom_Reactor_Pressure_(psi)'] = pd.to_numeric(lrcg1_df['Bottom_Reactor_Pressure_(psi)']+0.0)
+    lrcg1_df['TopReactorPressurepsi'] = pd.to_numeric(lrcg1_df['TopReactorPressurepsi']+0.0)
+    lrcg1_df['BottomReactorPressurepsi'] = pd.to_numeric(lrcg1_df['BottomReactorPressurepsi']+0.0)
 
     return lrcg1_df
 
@@ -253,129 +253,129 @@ tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Pa
 
 with tempControl:
     #T2 slider
-    min_value = lrcg1_df['T2_(°C)'].min()
-    median_value = lrcg1_df['T2_(°C)'].median()
-    max_value = lrcg1_df['T2_(°C)'].max()
+    min_value = lrcg1_df['T2C'].min()
+    median_value = lrcg1_df['T2C'].median()
+    max_value = lrcg1_df['T2C'].max()
     t2 = st.slider(
     'T2 (°C) - Critical:',
-    min_value = lrcg1_df['T2_(°C)'].min(),
-    max_value = lrcg1_df['T2_(°C)'].max(),
+    min_value = lrcg1_df['T2C'].min(),
+    max_value = lrcg1_df['T2C'].max(),
     value=median_value)
     
     #T3 slider
-    min_value = lrcg1_df['T3_(°C)'].min()
-    median_value = lrcg1_df['T3_(°C)'].median()
-    max_value = lrcg1_df['T3_(°C)'].max()
+    min_value = lrcg1_df['T3C'].min()
+    median_value = lrcg1_df['T3C'].median()
+    max_value = lrcg1_df['T3C'].max()
     t3 = st.slider(
     'T3 (°C):',
-    min_value = lrcg1_df['T3_(°C)'].min(),
-    max_value = lrcg1_df['T3_(°C)'].max(),
+    min_value = lrcg1_df['T3C'].min(),
+    max_value = lrcg1_df['T3C'].max(),
     value=median_value)
      
     #T4 slider
-    min_value = lrcg1_df['T4_(°C)'].min()
-    median_value = lrcg1_df['T4_(°C)'].median()
-    max_value = lrcg1_df['T4_(°C)'].max()
+    min_value = lrcg1_df['T4C'].min()
+    median_value = lrcg1_df['T4C'].median()
+    max_value = lrcg1_df['T4C'].max()
     t4 = st.slider(
     'T4 (°C):',
-    min_value = lrcg1_df['T4_(°C)'].min(),
-    max_value = lrcg1_df['T4_(°C)'].max(),
+    min_value = lrcg1_df['T4C'].min(),
+    max_value = lrcg1_df['T4C'].max(),
     value=median_value)
     
     #T1 slider
-    min_value = lrcg1_df['T1_(°C)'].min()
-    median_value = lrcg1_df['T1_(°C)'].median()
-    max_value = lrcg1_df['T1_(°C)'].max()
+    min_value = lrcg1_df['T1C'].min()
+    median_value = lrcg1_df['T1C'].median()
+    max_value = lrcg1_df['T1C'].max()
     t1 = st.slider(
     'T1 (°C):',
-    min_value = lrcg1_df['T1_(°C)'].min(),
-    max_value = lrcg1_df['T1_(°C)'].max(),
+    min_value = lrcg1_df['T1C'].min(),
+    max_value = lrcg1_df['T1C'].max(),
     value=median_value)
     
     #T5 slider
-    min_value = lrcg1_df['T5_(°C)'].min()
-    median_value = lrcg1_df['T5_(°C)'].median()
-    max_value = lrcg1_df['T5_(°C)'].max()
+    min_value = lrcg1_df['T5C'].min()
+    median_value = lrcg1_df['T5C'].median()
+    max_value = lrcg1_df['T5C'].max()
     t5 = st.slider(
     'T5 (°C):',
-    min_value = lrcg1_df['T5_(°C)'].min(),
-    max_value = lrcg1_df['T5_(°C)'].max(),
+    min_value = lrcg1_df['T5C'].min(),
+    max_value = lrcg1_df['T5C'].max(),
     value=median_value)
 
 
 with procParam:
     
     #LHSV slider
-    min_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].min()
-    median_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].median()
-    max_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].max()
+    min_value = lrcg1_df['LHSV1husescatalystvolume'].min()
+    median_value = lrcg1_df['LHSV1husescatalystvolume'].median()
+    max_value = lrcg1_df['LHSV1husescatalystvolume'].max()
     lhsv = st.slider(
     'LHSV (1/h):',
-    min_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].min(),
-    max_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].max(),
+    min_value = lrcg1_df['LHSV1husescatalystvolume'].min(),
+    max_value = lrcg1_df['LHSV1husescatalystvolume'].max(),
     value=median_value)
 
     #H2:GLY slider
-    min_value = lrcg1_df['H2:GLY_Molar_Ratio'].min()
-    median_value = lrcg1_df['H2:GLY_Molar_Ratio'].median()
-    max_value = lrcg1_df['H2:GLY_Molar_Ratio'].max()
+    min_value = lrcg1_df['H2GLYMolarRatio'].min()
+    median_value = lrcg1_df['H2GLYMolarRatio'].median()
+    max_value = lrcg1_df['H2GLYMolarRatio'].max()
     h2gly_ratio = st.slider(
     'H2:GLY Ratio:',
-    min_value = lrcg1_df['H2:GLY_Molar_Ratio'].min(),
-    max_value = lrcg1_df['H2:GLY_Molar_Ratio'].max(),
+    min_value = lrcg1_df['H2GLYMolarRatio'].min(),
+    max_value = lrcg1_df['H2GLYMolarRatio'].max(),
     value=median_value)
 
     #Liquid Feed slider
-    min_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].min()
-    median_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].median()
-    max_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].max()
+    min_value = lrcg1_df['LiquidFeedSetpointmLmin'].min()
+    median_value = lrcg1_df['LiquidFeedSetpointmLmin'].median()
+    max_value = lrcg1_df['LiquidFeedSetpointmLmin'].max()
     liquid_feed = st.slider(
     'Liquid Feed (g/h):',
-    min_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].min(),
-    max_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].max(),
+    min_value = lrcg1_df['LiquidFeedSetpointmLmin'].min(),
+    max_value = lrcg1_df['LiquidFeedSetpointmLmin'].max(),
     value=median_value)
     
     #Hydrogen Flow slider
-    min_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].min()
-    median_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].median()
-    max_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].max()
+    min_value = lrcg1_df['HydrogenGasFlowLmin'].min()
+    median_value = lrcg1_df['HydrogenGasFlowLmin'].median()
+    max_value = lrcg1_df['HydrogenGasFlowLmin'].max()
     hydrogen_flow = st.slider(
     'Hydrogen Flow (mL/min):',
-    min_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].min(),
-    max_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].max(),
+    min_value = lrcg1_df['HydrogenGasFlowLmin'].min(),
+    max_value = lrcg1_df['HydrogenGasFlowLmin'].max(),
     value=median_value)
 
 
 with pressurePH:
 
     #Top Reactor Pressure slider
-    min_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].min()
-    median_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].median()
-    max_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].max()
+    min_value = lrcg1_df['TopReactorPressurepsi'].min()
+    median_value = lrcg1_df['TopReactorPressurepsi'].median()
+    max_value = lrcg1_df['TopReactorPressurepsi'].max()
     top_pressure = st.slider(
     'Top Pressure (bar):',
-    min_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].min(),
-    max_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].max(),
+    min_value = lrcg1_df['TopReactorPressurepsi'].min(),
+    max_value = lrcg1_df['TopReactorPressurepsi'].max(),
     value=median_value)
 
     #Bottom Reactor Pressure slider
-    min_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].min()
-    median_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].median()
-    max_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].max()
+    min_value = lrcg1_df['BottomReactorPressurepsi'].min()
+    median_value = lrcg1_df['BottomReactorPressurepsi'].median()
+    max_value = lrcg1_df['BottomReactorPressurepsi'].max()
     bottom_pressure = st.slider(
     'Bottom Pressure (bar):',
-    min_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].min(),
-    max_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].max(),
+    min_value = lrcg1_df['BottomReactorPressurepsi'].min(),
+    max_value = lrcg1_df['BottomReactorPressurepsi'].max(),
     value=median_value)
     
     #Feed pH slider
-    min_value = lrcg1_df['Feed_pH'].min()
-    median_value = lrcg1_df['Feed_pH'].median()
-    max_value = lrcg1_df['Feed_pH'].max()
+    min_value = lrcg1_df['FeedpH'].min()
+    median_value = lrcg1_df['FeedpH'].median()
+    max_value = lrcg1_df['FeedpH'].max()
     feed_ph = st.slider(
     'Feed pH:',
-    min_value = lrcg1_df['Feed_pH'].min(),
-    max_value = lrcg1_df['Feed_pH'].max(),
+    min_value = lrcg1_df['FeedpH'].min(),
+    max_value = lrcg1_df['FeedpH'].max(),
     value=median_value)
 
 
@@ -462,21 +462,20 @@ st.markdown("""
 """)
 
 
-fig = plt.figure()
-ax = fig.add_subplot(1,1,1)
 
-ax.scatter(
-    lrcg1_df['T2_(°C)'],
-    lrcg1_df['Glycerol_Conversion_(wt.%)'],
-    )
+# fit simple linear regression model
+linear_model = ols('GlycerolConversionwt ~ H2GLYMolarRatio+ LiquidFeedSetpointmLmin + PumpLiquidFeedmLmin + MeasuredLiquidFeedmLmin + LHSV1husescatalystvolume + HydrogenGasFlowLmin + TopReactorPressurepsi + BottomReactorPressurepsi + T1C + T2C + T3C + T4C + T5C + HighTemperatureC + AverageTemperatureofT2T3T4C + FeedpH + ProductpH + GlycerolinFeedgkg', data=lrcg1_df).fit()
 
-ax.set_xlabel('T2 (°C)')
-ax.set_ylabel('Glycerol Conversion (wt.%)')
+# display model summary
+print(linear_model.summary())
+
+# modify figure size
+fig = plt.figure(figsize=(14, 14))
+
+# creating regression plots
+fig = sm.graphics.plot_regress_exog(linear_model, 'T2C', fig=fig)
 
 st.write(fig)
-
-
-
 
 
 
