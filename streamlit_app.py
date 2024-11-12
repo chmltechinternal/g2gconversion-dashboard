@@ -150,6 +150,7 @@ st.set_page_config(
 # Declare some useful functions.
 
 @st.cache_data
+
 def get_gdp_data():
     """Grab GDP data from a CSV file.
 
@@ -245,9 +246,11 @@ lrcg1_df = get_lrc_data()
 #title only
 '''
 # Glycerin-to-Glycol Conversion dashboard
-
-Advanced model with normalized parameter impacts.
 '''
+st.subheader('Glycerol Conversion Calculator')
+st.markdown("Advanced model with normalized parameter impacts")
+
+
 # Create tabs
 tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
 
