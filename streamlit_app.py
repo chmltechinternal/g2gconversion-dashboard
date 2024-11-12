@@ -81,7 +81,60 @@ OPTIMAL_RANGES = {
     }
 }
 
+def smooth_transition(x, center, sensitivity):
+    """Create a smooth transition using sigmoid function"""
+    return expit(-(x - center) * sensitivity)
 
+def calculate_parameter_impact(value, param_info):
+    """Calculate normalized impact with smooth transitions"""
+    optimal = param_info['optimal']
+    min_val = param_info['min']
+    max_val = param_info['max']
+    sensitivity = param_info['sensitivity']
+    base_impact = param_info['base_impact']
+
+    # Normalize distance from optimal
+    range_size = max_val - min_val
+    normalized_distance = abs(value - optimal) / range_size
+
+    # Calculate base effect using smooth transition
+    base_effect = smooth_transition(normalized_distance, 0, 1/sensitivity)
+
+    # Scale effect by base impact
+    impact = base_impact * base_effect
+
+    # Apply small penalty for being outside optimal range
+    if value < min_val or value > max_val:
+        excess = min(abs(value - optimal) / range_size, 1)
+        impact *= (1 - 0.2 * excess)
+
+    return impact
+
+def calculate_total_conversion(params):
+    """Calculate glycerol conversion with normalized impacts"""
+    # Calculate derived parameters
+    pressure_diff = params['top_pressure'] - params['bottom_pressure']
+    temps = [params['t1'], params['t2'], params['t3'], params['t4'], params['t5']]
+    avg_temperature = sum(temps) / len(temps)
+    temp_range = max(temps) - min(temps)
+
+    # Calculate individual impacts
+    impacts = {name: calculate_parameter_impact(value, OPTIMAL_RANGES[name])
+              for name, value in params.items()}
+
+    # Calculate base conversion with temperature average effect
+    base_conversion = 60  # Minimum expected conversion
+
+    # Sum weighted impacts
+    total_impact = sum(impacts.values())
+
+    # Calculate final conversion with smoother scaling
+    conversion = base_conversion + total_impact
+
+    # Ensure realistic bounds
+    conversion = np.clip(conversion, 0, 100)
+
+    return conversion, impacts
 
 
 
@@ -155,6 +208,42 @@ def get_gdp_data():
 
 gdp_df = get_gdp_data()
 
+
+def get_lrc_data():
+    """Grab LRC data from a CSV file.
+
+    This uses caching to avoid having to read the file every time. If we were
+    reading from an HTTP endpoint instead of a file, it's a good idea to set
+    a maximum age to the cache with the TTL argument: @st.cache_data(ttl='1d')
+    """
+
+    # Instead of a CSV on disk, you could read from an HTTP endpoint here too.
+    DATA_FILENAME2 = Path(__file__).parent/'data/LRC_G1_Data_clean.csv'
+    lrcg1_df = pd.read_csv(DATA_FILENAME2)
+
+    # The data above has columns like:
+    # - Sample ID
+    # - Sample Number
+    # - [Stuff I don't care about]
+    # - T1 (°C)
+    # - T2 (°C)
+    # - T3 (°C)
+    # - ...
+    # - T5 (°C)
+    #
+
+    # Convert temp from string to integers
+    lrcg1_df['T1 (°C)'] = pd.to_numeric(lrcg1_df['T1 (°C)'])
+    lrcg1_df['T2 (°C)'] = pd.to_numeric(lrcg1_df['T2 (°C)'])
+    lrcg1_df['T3 (°C)'] = pd.to_numeric(lrcg1_df['T3 (°C)'])
+    lrcg1_df['T4 (°C)'] = pd.to_numeric(lrcg1_df['T4 (°C)'])
+    lrcg1_df['T5 (°C)'] = pd.to_numeric(lrcg1_df['T5 (°C)'])
+
+    return lrcg1_df
+
+lrcg1_df = get_lrc_data()
+
+
 # -----------------------------------------------------------------------------
 # Draw the actual page
 
@@ -172,34 +261,34 @@ tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Pa
 
 with tempControl:
     min_value = 180
-    max_value = 200
+    max_value = 220
     range_T2 = st.slider(
     'T2 (°C) - Critical:',
-    min_value=0,
+    min_value=180,
     max_value=200,
     value=[min_value, max_value])
     
     range_T3 = st.slider(
     'T3 (°C):',
-    min_value=0,
+    min_value=180,
     max_value=200,
     value=[min_value, max_value])
     
     range_T4 = st.slider(
     'T4 (°C):',
-    min_value=0,
-    max_value=201,
+    min_value=180,
+    max_value=200,
     value=[min_value, max_value])
     
     range_T1 = st.slider(
     'T1 (°C):',
-    min_value=0,
+    min_value=180,
     max_value=195,
     value=[min_value, max_value])
     
     range_T5 = st.slider(
     'T5 (°C):',
-    min_value=0,
+    min_value=180,
     max_value=195,
     value=[min_value, max_value])
 
