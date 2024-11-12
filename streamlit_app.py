@@ -429,7 +429,7 @@ st.markdown(f"""
 
  # Display parameter impacts
 st.markdown("### Parameter Contributions")
-col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns([3,3,2])
 
 with col1:
         st.markdown("#### Temperature Impacts")
