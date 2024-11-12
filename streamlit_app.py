@@ -141,13 +141,24 @@ def calculate_total_conversion(params):
 # Define your custom CSS
 custom_css = """
 <style>
-.prediction-box {
- background-color: #f0f2f6;
- padding: 10px;
- border-radius: 5px;
- text-align: center;
-
-}
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2px;
+        }
+    .stTabs [data-baseweb="tab"] {
+        padding: 10px 20px;
+        }
+    .metric-container {
+        background-color: #e8f4f8;
+        padding: 20px;
+        border-radius: 5px;
+        border: 2px solid #2c3e50;
+        text-align: center;
+        margin: 20px 0;
+        }
+    .info-text {
+        color: #2980b9;
+        font-weight: bold;
+        }
 </style>
 """
 
@@ -224,7 +235,7 @@ def get_lrc_data():
     # The data above has columns like:
     # - Sample ID
     # - Sample Number
-    # - [Stuff I don't care about]
+    # - ...
     # - T1 (°C)
     # - T2 (°C)
     # - T3 (°C)
@@ -232,12 +243,16 @@ def get_lrc_data():
     # - T5 (°C)
     #
 
-    # Convert temp from string to integers
-    lrcg1_df['T1 (°C)'] = pd.to_numeric(lrcg1_df['T1 (°C)'])
-    lrcg1_df['T2 (°C)'] = pd.to_numeric(lrcg1_df['T2 (°C)'])
-    lrcg1_df['T3 (°C)'] = pd.to_numeric(lrcg1_df['T3 (°C)'])
-    lrcg1_df['T4 (°C)'] = pd.to_numeric(lrcg1_df['T4 (°C)'])
-    lrcg1_df['T5 (°C)'] = pd.to_numeric(lrcg1_df['T5 (°C)'])
+    # Convert temp from string to float
+    lrcg1_df['T1_(°C)'] = pd.to_numeric(lrcg1_df['T1_(°C)'])
+    lrcg1_df['T2_(°C)'] = pd.to_numeric(lrcg1_df['T2_(°C)'])
+    lrcg1_df['T3_(°C)'] = pd.to_numeric(lrcg1_df['T3_(°C)'])
+    lrcg1_df['T4_(°C)'] = pd.to_numeric(lrcg1_df['T4_(°C)'])
+    lrcg1_df['T5_(°C)'] = pd.to_numeric(lrcg1_df['T5_(°C)'])
+
+    # Convert top pressure from integer to float
+    lrcg1_df['Top_Reactor_Pressure_(psi)'] = pd.to_numeric(lrcg1_df['Top_Reactor_Pressure_(psi)']+0.0)
+    lrcg1_df['Bottom_Reactor_Pressure_(psi)'] = pd.to_numeric(lrcg1_df['Bottom_Reactor_Pressure_(psi)']+0.0)
 
     return lrcg1_df
 
@@ -260,76 +275,190 @@ Advanced model with normalized parameter impacts.
 tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
 
 with tempControl:
-    min_value = 180
-    max_value = 220
-    range_T2 = st.slider(
+    #T2 slider
+    min_value = lrcg1_df['T2_(°C)'].min()
+    median_value = lrcg1_df['T2_(°C)'].median()
+    max_value = lrcg1_df['T2_(°C)'].max()
+    t2 = st.slider(
     'T2 (°C) - Critical:',
-    min_value=lrcg1_df['T1 (°C)'].min(),
-    min_value=lrcg1_df['T1 (°C)'].max(),
-    value=[min_value, max_value])
+    min_value = lrcg1_df['T2_(°C)'].min(),
+    max_value = lrcg1_df['T2_(°C)'].max(),
+    value=median_value)
     
-    range_T3 = st.slider(
+    #T3 slider
+    min_value = lrcg1_df['T3_(°C)'].min()
+    median_value = lrcg1_df['T3_(°C)'].median()
+    max_value = lrcg1_df['T3_(°C)'].max()
+    t3 = st.slider(
     'T3 (°C):',
-    min_value=180,
-    max_value=200,
-    value=[min_value, max_value])
-    
-    range_T4 = st.slider(
+    min_value = lrcg1_df['T3_(°C)'].min(),
+    max_value = lrcg1_df['T3_(°C)'].max(),
+    value=median_value)
+     
+    #T4 slider
+    min_value = lrcg1_df['T4_(°C)'].min()
+    median_value = lrcg1_df['T4_(°C)'].median()
+    max_value = lrcg1_df['T4_(°C)'].max()
+    t4 = st.slider(
     'T4 (°C):',
-    min_value=180,
-    max_value=200,
-    value=[min_value, max_value])
+    min_value = lrcg1_df['T4_(°C)'].min(),
+    max_value = lrcg1_df['T4_(°C)'].max(),
+    value=median_value)
     
-    range_T1 = st.slider(
+    #T1 slider
+    min_value = lrcg1_df['T1_(°C)'].min()
+    median_value = lrcg1_df['T1_(°C)'].median()
+    max_value = lrcg1_df['T1_(°C)'].max()
+    t1 = st.slider(
     'T1 (°C):',
-    min_value=180,
-    max_value=195,
-    value=[min_value, max_value])
+    min_value = lrcg1_df['T1_(°C)'].min(),
+    max_value = lrcg1_df['T1_(°C)'].max(),
+    value=median_value)
     
-    range_T5 = st.slider(
+    #T5 slider
+    min_value = lrcg1_df['T5_(°C)'].min()
+    median_value = lrcg1_df['T5_(°C)'].median()
+    max_value = lrcg1_df['T5_(°C)'].max()
+    t5 = st.slider(
     'T5 (°C):',
-    min_value=180,
-    max_value=195,
-    value=[min_value, max_value])
+    min_value = lrcg1_df['T5_(°C)'].min(),
+    max_value = lrcg1_df['T5_(°C)'].max(),
+    value=median_value)
 
 
 with procParam:
-    range_LHSV = st.slider(
+    
+    #LHSV slider
+    min_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].min()
+    median_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].median()
+    max_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].max()
+    lhsv = st.slider(
     'LHSV (1/h):',
-    value=[0.00, 0.60])
-    
-    range_H2_GLY = st.slider(
+    min_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].min(),
+    max_value = lrcg1_df['LHSV_(1/h)_uses_catalyst_volume'].max(),
+    value=median_value)
+
+    #H2:GLY slider
+    min_value = lrcg1_df['H2:GLY_Molar_Ratio'].min()
+    median_value = lrcg1_df['H2:GLY_Molar_Ratio'].median()
+    max_value = lrcg1_df['H2:GLY_Molar_Ratio'].max()
+    h2gly_ratio = st.slider(
     'H2:GLY Ratio:',
-    value=[0.00, 6.50])
-    
-    range_LF = st.slider(
+    min_value = lrcg1_df['H2:GLY_Molar_Ratio'].min(),
+    max_value = lrcg1_df['H2:GLY_Molar_Ratio'].max(),
+    value=median_value)
+
+    #Liquid Feed slider
+    min_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].min()
+    median_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].median()
+    max_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].max()
+    liquid_feed = st.slider(
     'Liquid Feed (g/h):',
-    value=[0.00, 100.00])
+    min_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].min(),
+    max_value = lrcg1_df['Liquid_Feed_Setpoint_(mL/min)'].max(),
+    value=median_value)
     
-    range_HF = st.slider(
+    #Hydrogen Flow slider
+    min_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].min()
+    median_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].median()
+    max_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].max()
+    hydrogen_flow = st.slider(
     'Hydrogen Flow (mL/min):',
-    value=[0.00, 450.00])
+    min_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].min(),
+    max_value = lrcg1_df['Hydrogen_Gas_Flow_(L/min)'].max(),
+    value=median_value)
+
 
 with pressurePH:
-    range_TP = st.slider(
+
+    #Top Reactor Pressure slider
+    min_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].min()
+    median_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].median()
+    max_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].max()
+    top_pressure = st.slider(
     'Top Pressure (bar):',
-    value=[0.00, 30.00])
-    
-    range_BP = st.slider(
+    min_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].min(),
+    max_value = lrcg1_df['Top_Reactor_Pressure_(psi)'].max(),
+    value=median_value)
+
+    #Bottom Reactor Pressure slider
+    min_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].min()
+    median_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].median()
+    max_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].max()
+    bottom_pressure = st.slider(
     'Bottom Pressure (bar):',
-    value=[0.00, 25.00])
+    min_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].min(),
+    max_value = lrcg1_df['Bottom_Reactor_Pressure_(psi)'].max(),
+    value=median_value)
     
-    range_FpH = st.slider(
+    #Feed pH slider
+    min_value = lrcg1_df['Feed_pH'].min()
+    median_value = lrcg1_df['Feed_pH'].median()
+    max_value = lrcg1_df['Feed_pH'].max()
+    feed_ph = st.slider(
     'Feed pH:',
-    value=[0.00, 7.00])
-    
-# Apply the custom CSS
-st.markdown(custom_css, unsafe_allow_html=True)
-
-# Use the custom class in a container
-st.markdown('<div class="prediction-box"><h2 style="margin: 0; color: #2c3e50;">Predicted Glycerol Conversion</h2><p style="font-size: 2.5em; margin: 10px 0; color: #2980b9;">{conversion:.1f}%</p></div>', unsafe_allow_html=True)
+    min_value = lrcg1_df['Feed_pH'].min(),
+    max_value = lrcg1_df['Feed_pH'].max(),
+    value=median_value)
 
 
+ # Calculate conversion and impacts
+    params = {
+        't2': t2,
+        't3': t3,
+        't4': t4,
+        't1': t1,
+        't5': t5,
+        'lhsv': lhsv,
+        'h2gly_ratio': h2gly_ratio,
+        'liquid_feed': liquid_feed,
+        'hydrogen_flow': hydrogen_flow,
+        'top_pressure': top_pressure,
+        'bottom_pressure': bottom_pressure,
+        'feed_ph': feed_ph
+    }
+
+    conversion, impacts = calculate_total_conversion(params)
+
+
+# Display prediction
+st.markdown(f"""
+    <div class="metric-container">
+        <h2>Predicted Glycerol Conversion</h2>
+        <h1>{conversion:.1f}%</h1>
+    </div>
+    """, unsafe_allow_html=True)
+
+ # Display parameter impacts
+st.markdown("### Parameter Contributions")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+        st.markdown("#### Temperature Impacts")
+        for temp in ['t2', 't3', 't4', 't1', 't5']:
+            st.write(f"{temp.upper()}: +{impacts[temp]:.1f}%")
+
+with col2:
+        st.markdown("#### Process Parameters")
+        st.write(f"LHSV: +{impacts['lhsv']:.1f}%")
+        st.write(f"H2:GLY Ratio: +{impacts['h2gly_ratio']:.1f}%")
+        st.write(f"Liquid Feed: +{impacts['liquid_feed']:.1f}%")
+        st.write(f"Hydrogen Flow: +{impacts['hydrogen_flow']:.1f}%")
+
+with col3:
+        st.markdown("#### Pressure & pH")
+        st.write(f"Top Pressure: +{impacts['top_pressure']:.1f}%")
+        st.write(f"Bottom Pressure: +{impacts['bottom_pressure']:.1f}%")
+        st.write(f"Feed pH: +{impacts['feed_ph']:.1f}%")
+
+# Operating Guidelines
+st.markdown("### Operating Guidelines")
+st.markdown("""
+- Maintain T2-T4 within 195-205°C for optimal conversion
+- Keep pressure differential balanced for system stability
+- Monitor pH within optimal range of 6-8
+- Maintain proper H2:GLY ratio for reaction efficiency
+""")
 
 
 # Add some spacing
