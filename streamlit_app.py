@@ -247,7 +247,7 @@ lrcg1_df = get_lrc_data()
 '''
 # Glycerin-to-Glycol Conversion dashboard
 '''
-st.subheader('Glycerol Conversion Calculator')
+st.subheader('Glycerol Conversion Calculator', divider='red')
 st.markdown("Advanced model with normalized parameter impacts")
 
 
@@ -418,12 +418,18 @@ st.markdown("""
             text-align: center;
             margin: 20px 0;
         }
+        .subheading{
+            font-weight:bold;
+            font-size: 22px;
+            }
+
         .subsubheading {
             color: red;
             font-size: 18px;
         }
         .info-text {
             font-size: 14px;
+            line-height:14px;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -437,7 +443,7 @@ st.markdown(f"""
     """, unsafe_allow_html=True)
 
  # Display parameter impacts
-st.markdown("### Parameter Contributions")
+st.markdown("""<p class="subheading">Parameter Contributions</p>""", unsafe_allow_html=True)
 col1, col2, col3 = st.columns([3,3,2])
 
 with col1:
@@ -459,15 +465,18 @@ with col3:
         st.write(f"""<p class="info-text">Feed pH: +{impacts['feed_ph']:.1f}%</p>""", unsafe_allow_html=True)
 
 # Operating Guidelines
-st.markdown("### Operating Guidelines")
-st.markdown("""
-- Maintain T2-T4 within 195-205°C for optimal conversion
-- Keep pressure differential balanced for system stability
-- Monitor pH within optimal range of 6-8
-- Maintain proper H2:GLY ratio for reaction efficiency
-""")
+st.markdown("""<p class="subheading">Operating Guidelines</p>""", unsafe_allow_html=True)
+st.markdown("""<ul class="info-text">
+<li class="info-text"> Maintain T2-T4 within 195-205°C for optimal conversion</li>
+<li class="info-text"> Keep pressure differential balanced for system stability</li>
+<li class="info-text"> Monitor pH within optimal range of 6-8</li>
+<li class="info-text"> Maintain proper H2:GLY ratio for reaction efficiency</li>
+</ul>""", unsafe_allow_html=True)
 
+# Add some spacing
+''
 
+st.subheader('Glycerin to Glycol Yield', divider='red')
 
 # fit simple linear regression model
 linear_model = ols('GlycerolConversionwt ~ H2GLYMolarRatio+ LiquidFeedSetpointmLmin + PumpLiquidFeedmLmin + MeasuredLiquidFeedmLmin + LHSV1husescatalystvolume + HydrogenGasFlowLmin + TopReactorPressurepsi + BottomReactorPressurepsi + T1C + T2C + T3C + T4C + T5C + HighTemperatureC + AverageTemperatureofT2T3T4C + FeedpH + ProductpH + GlycerolinFeedgkg', data=lrcg1_df).fit()
