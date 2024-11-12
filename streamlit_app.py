@@ -7,6 +7,14 @@ from scipy.special import expit
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 from statsmodels.formula.api import ols
+from sklearn.linear_model import LinearRegression
+from sklearn import datasets, ensemble
+from sklearn.inspection import permutation_importance
+from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from lightgbm import LGBMRegressor
+import shap
 
 # Define optimal ranges with sensitivity and base impacts
 OPTIMAL_RANGES = {
@@ -491,7 +499,6 @@ fig = plt.figure(figsize=(14, 14))
 fig = sm.graphics.plot_regress_exog(linear_model, 'T2C', fig=fig)
 
 st.write(fig)
-
 
 
 #comment this out for now (example of GDP graph and slider)
