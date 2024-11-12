@@ -461,12 +461,22 @@ st.markdown("""
 """)
 
 
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+
+ax.scatter(
+    lrcg1_df['T2_(°C)'],
+    lrcg1_df['Glycerol_Conversion_(wt.%)'],
+    )
+
+ax.set_xlabel('T2 (°C)')
+ax.set_ylabel('Glycerol Conversion (wt.%)')
+
+st.write(fig)
 
 
-
-
-
-
+#comment this out for now (example of GDP graph and slider)
+_ ="""
 
 # Add some spacing
 ''
@@ -546,3 +556,5 @@ for i, country in enumerate(selected_countries):
             delta=growth,
             delta_color=delta_color
         )
+
+        """
