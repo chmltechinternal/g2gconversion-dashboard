@@ -410,15 +410,15 @@ st.markdown("""
             text-align:left;
         }
         .stTabs [data-baseweb="tab"] {
-            padding: 10px 20px;
+            padding: 10px 15px;
         }
         .metric-container {
             background-color: #e8f4f8;
-            padding: 20px;
+            padding: 15px;
             border-radius: 5px;
             border: 2px solid #2c3e50;
             text-align: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
         .subheading{
             font-weight:bold;
