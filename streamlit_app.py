@@ -3,7 +3,87 @@ import pandas as pd
 import math
 from pathlib import Path
 import numpy as np
-#from scipy.special import expit
+from scipy.special import expit
+
+# Define optimal ranges with sensitivity and base impacts
+OPTIMAL_RANGES = {
+    't2': {
+        'min': 195, 'max': 205, 'optimal': 200,
+        'weight': 0.27,
+        'sensitivity': 0.217985,
+        'base_impact': 30
+    },
+    't3': {
+        'min': 195, 'max': 205, 'optimal': 200,
+        'weight': 0.25,
+        'sensitivity': 0.136957,
+        'base_impact': 25
+    },
+    't4': {
+        'min': 195, 'max': 205, 'optimal': 200,
+        'weight': 0.40,
+        'sensitivity': 0.181967,
+        'base_impact': 25
+    },
+    't1': {
+        'min': 190, 'max': 200, 'optimal': 195,
+        'weight': 0.10,
+        'sensitivity': 0.069769,
+        'base_impact': 10
+    },
+    't5': {
+        'min': 190, 'max': 200, 'optimal': 195,
+        'weight': 0.05,
+        'sensitivity': 0.003058,
+        'base_impact': 10
+    },
+    'lhsv': {
+        'min': 0.5, 'max': 0.7, 'optimal': 0.6,
+        'weight': 0.05,
+        'sensitivity': 0.016678,
+        'base_impact': 5
+    },
+    'h2gly_ratio': {
+        'min': 6, 'max': 7, 'optimal': 6.5,
+        'weight': 0.05,
+        'sensitivity': 0.004925,
+        'base_impact': 5
+    },
+    'liquid_feed': {
+        'min': 50, 'max': 150, 'optimal': 100,
+        'weight': 0.05,
+        'sensitivity': 0.000073,
+        'base_impact': 5
+    },
+    'hydrogen_flow': {
+        'min': 300, 'max': 600, 'optimal': 450,
+        'weight': 0.05,
+        'sensitivity': 0.000058,
+        'base_impact': 5
+    },
+    'top_pressure': {
+        'min': 20, 'max': 40, 'optimal': 30,
+        'weight': 0.05,
+        'sensitivity': 0.003176,
+        'base_impact': 5
+    },
+    'bottom_pressure': {
+        'min': 15, 'max': 35, 'optimal': 25,
+        'weight': 0.05,
+        'sensitivity': 0.001230,
+        'base_impact': 5
+    },
+    'feed_ph': {
+        'min': 6, 'max': 8, 'optimal': 7,
+        'weight': 0.05,
+        'sensitivity': 0.010348,
+        'base_impact': 5
+    }
+}
+
+
+
+
 
 # Define your custom CSS
 custom_css = """
