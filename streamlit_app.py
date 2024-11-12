@@ -4,6 +4,10 @@ import math
 from pathlib import Path
 import numpy as np
 from scipy.special import expit
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
 
 # Define optimal ranges with sensitivity and base impacts
 OPTIMAL_RANGES = {
@@ -457,6 +461,13 @@ st.markdown("""
 - Monitor pH within optimal range of 6-8
 - Maintain proper H2:GLY ratio for reaction efficiency
 """)
+
+
+
+
+
+
+
 
 
 # Add some spacing
