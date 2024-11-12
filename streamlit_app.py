@@ -250,9 +250,12 @@ lrcg1_df = get_lrc_data()
 st.subheader('Glycerol Conversion Calculator', divider='red')
 st.markdown("Advanced model with normalized parameter impacts")
 
+col_sliders, col_prediction = st.columns([4,2])
 
+with col_sliders:
+        
 # Create tabs
-tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
+    tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
 
 with tempControl:
     #T2 slider
@@ -381,7 +384,6 @@ with pressurePH:
     max_value = lrcg1_df['FeedpH'].max(),
     value=median_value)
 
-
  # Calculate conversion and impacts
     params = {
         't2': t2,
@@ -434,8 +436,11 @@ st.markdown("""
         </style>
     """, unsafe_allow_html=True)
 
+
+with col_prediction:
+     
 # Display prediction
-st.markdown(f"""
+    st.markdown(f"""
     <div class="metric-container">
         <h2>Predicted Glycerol Conversion</h2>
         <h1>{conversion:.1f}%</h1>
