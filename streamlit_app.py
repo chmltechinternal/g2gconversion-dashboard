@@ -137,32 +137,6 @@ def calculate_total_conversion(params):
     return conversion, impacts
 
 
-
-# Define your custom CSS
-custom_css = """
-<style>
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 2px;
-        }
-    .stTabs [data-baseweb="tab"] {
-        padding: 10px 20px;
-        }
-    .metric-container {
-        background-color: #e8f4f8;
-        padding: 20px;
-        border-radius: 5px;
-        border: 2px solid #2c3e50;
-        text-align: center;
-        margin: 20px 0;
-        }
-    .info-text {
-        color: #2980b9;
-        font-weight: bold;
-        }
-</style>
-"""
-
-
 # Set the title and favicon that appear in the Browser's tab bar.
 st.set_page_config(
     page_title='Glycerin-to-Glycol Conversion dashboard',
@@ -420,6 +394,30 @@ with pressurePH:
 
     conversion, impacts = calculate_total_conversion(params)
 
+#Custom css
+st.markdown("""
+        <style>
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 2px;
+            text-align:left;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 10px 20px;
+        }
+        .metric-container {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 5px;
+            border: 2px solid #2c3e50;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .info-text {
+            color: #2980b9;
+            font-weight: bold;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 
 # Display prediction
 st.markdown(f"""
