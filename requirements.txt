@@ -4,6 +4,3 @@ numpy
 scipy
 matplotlib
 statsmodels
-sklearn
-lightgbm
-shap
