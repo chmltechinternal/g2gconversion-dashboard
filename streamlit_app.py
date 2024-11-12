@@ -418,9 +418,12 @@ st.markdown("""
             text-align: center;
             margin: 20px 0;
         }
+        .subsubheading {
+            color: red;
+            font-size: 18px;
+        }
         .info-text {
-            color: #2980b9;
-            font-weight: bold;
+            font-size: 14px;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -438,22 +441,22 @@ st.markdown("### Parameter Contributions")
 col1, col2, col3 = st.columns([3,3,2])
 
 with col1:
-        st.markdown("#### Temperature Impacts")
+        st.markdown("""<p class="subsubheading">Temperature Impacts</p>""", unsafe_allow_html=True)
         for temp in ['t2', 't3', 't4', 't1', 't5']:
-            st.write(f"{temp.upper()}: +{impacts[temp]:.1f}%")
+            st.write(f"""<p class="info-text">{temp.upper()}: +{impacts[temp]:.1f}%</p>""", unsafe_allow_html=True)
 
 with col2:
-        st.markdown("#### Process Parameters")
-        st.write(f"LHSV: +{impacts['lhsv']:.1f}%")
-        st.write(f"H2:GLY Ratio: +{impacts['h2gly_ratio']:.1f}%")
-        st.write(f"Liquid Feed: +{impacts['liquid_feed']:.1f}%")
-        st.write(f"Hydrogen Flow: +{impacts['hydrogen_flow']:.1f}%")
+        st.markdown("""<p class="subsubheading">Process Parameters</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">LHSV: +{impacts['lhsv']:.1f}%</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">H2:GLY Ratio: +{impacts['h2gly_ratio']:.1f}%</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">Liquid Feed: +{impacts['liquid_feed']:.1f}%</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">Hydrogen Flow: +{impacts['hydrogen_flow']:.1f}%</p>""", unsafe_allow_html=True)
 
 with col3:
-        st.markdown("#### Pressure & pH")
-        st.write(f"Top Pressure: +{impacts['top_pressure']:.1f}%")
-        st.write(f"Bottom Pressure: +{impacts['bottom_pressure']:.1f}%")
-        st.write(f"Feed pH: +{impacts['feed_ph']:.1f}%")
+        st.markdown("""<p class="subsubheading">Pressure & pH</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">Top Pressure: +{impacts['top_pressure']:.1f}%</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">Bottom Pressure: +{impacts['bottom_pressure']:.1f}%</p>""", unsafe_allow_html=True)
+        st.write(f"""<p class="info-text">Feed pH: +{impacts['feed_ph']:.1f}%</p>""", unsafe_allow_html=True)
 
 # Operating Guidelines
 st.markdown("### Operating Guidelines")
