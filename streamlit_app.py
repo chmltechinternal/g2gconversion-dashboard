@@ -447,6 +447,15 @@ with col_prediction:
     </div>
     """, unsafe_allow_html=True)
 
+    # Operating Guidelines
+    st.markdown("""<p class="subsubheading">Operating Guidelines</p>""", unsafe_allow_html=True)
+    st.markdown("""<ul class="info-text">
+<li> Maintain T2-T4 within 195-205°C for optimal conversion</li>
+<li> Keep pressure differential balanced for system stability</li>
+<li> Monitor pH within optimal range of 6-8</li>
+<li> Maintain proper H2:GLY ratio for reaction efficiency</li>
+</ul>""", unsafe_allow_html=True)
+
  # Display parameter impacts
 st.markdown("""<p class="subheading">Parameter Contributions</p>""", unsafe_allow_html=True)
 col1, col2, col3 = st.columns([3,3,2])
@@ -469,14 +478,7 @@ with col3:
         st.write(f"""<p class="info-text">Bottom Pressure: +{impacts['bottom_pressure']:.1f}%</p>""", unsafe_allow_html=True)
         st.write(f"""<p class="info-text">Feed pH: +{impacts['feed_ph']:.1f}%</p>""", unsafe_allow_html=True)
 
-# Operating Guidelines
-st.markdown("""<p class="subheading">Operating Guidelines</p>""", unsafe_allow_html=True)
-st.markdown("""<ul class="info-text">
-<li class="info-text"> Maintain T2-T4 within 195-205°C for optimal conversion</li>
-<li class="info-text"> Keep pressure differential balanced for system stability</li>
-<li class="info-text"> Monitor pH within optimal range of 6-8</li>
-<li class="info-text"> Maintain proper H2:GLY ratio for reaction efficiency</li>
-</ul>""", unsafe_allow_html=True)
+
 
 # Add some spacing
 ''
