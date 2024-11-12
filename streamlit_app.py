@@ -442,8 +442,8 @@ with col_prediction:
 # Display prediction
     st.markdown(f"""
     <div class="metric-container">
-        <h2>Predicted Glycerol Conversion</h2>
-        <h1>{conversion:.1f}%</h1>
+        <h3 style="text-align:center">Predicted Glycerol Conversion</h3>
+        <h1 style="text-align:center">{conversion:.1f}%</h1>
     </div>
     """, unsafe_allow_html=True)
 
