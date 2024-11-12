@@ -256,7 +256,7 @@ lrcg1_df = get_lrc_data()
 
 Advanced model with normalized parameter impacts.
 '''
-#set the tab containers
+# Create tabs
 tempControl, procParam, pressurePH = st.tabs(["Temperature Control", "Process Parameters", "Pressure & pH Control"])
 
 with tempControl:
@@ -264,8 +264,8 @@ with tempControl:
     max_value = 220
     range_T2 = st.slider(
     'T2 (°C) - Critical:',
-    min_value=180,
-    max_value=200,
+    min_value=lrcg1_df['T1 (°C)'].min(),
+    min_value=lrcg1_df['T1 (°C)'].max(),
     value=[min_value, max_value])
     
     range_T3 = st.slider(
