@@ -5,8 +5,6 @@ from pathlib import Path
 import numpy as np
 from scipy.special import expit
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
-#from statsmodels.formula.api import ols
 
 
 # Define optimal ranges with sensitivity and base impacts
